@@ -1,19 +1,20 @@
 <template>
   <Modal :products="products" :누른거="누른거" :isModalOpen="isModalOpen"/>
-  
   <div class="menu">
     <!-- :key의 용도 : 반복문 쓸 때 꼭 써야함
                     반복문 돌린 요소를 컴퓨터가 구분하기 위해 씀 -->
     <a v-for="(any, i) in menus" :key="i">{{ any }}</a>
   </div>
-  
   <Discount/>
-  <Card :products="products[0]" :누른거="누른거" :isModalOpen="isModalOpen"/>
-  <Card :products="products[1]" :누른거="누른거" :isModalOpen="isModalOpen"/>
-  <Card :products="products[2]" :누른거="누른거" :isModalOpen="isModalOpen"/>
-  <Card :products="products[3]" :누른거="누른거" :isModalOpen="isModalOpen"/>
-  <Card :products="products[4]" :누른거="누른거" :isModalOpen="isModalOpen"/>
-  <Card :products="products[5]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+  <Card @openModal="isModalOpen=true; 누른거=$event"
+    :원룸="products[i-1]" v-for="i in products.length" :key="i"    
+    :isModalOpen="isModalOpen"
+  />
+  <!-- <Card :원룸="products[1]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+  <Card :원룸="products[2]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+  <Card :원룸="products[3]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+  <Card :원룸="products[4]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+  <Card :원룸="products[5]" :누른거="누른거" :isModalOpen="isModalOpen"/> -->
   
   <!-- <div>
     <h4>{{ products[1] }}</h4>

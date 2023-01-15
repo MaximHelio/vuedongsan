@@ -1,8 +1,8 @@
 <template>
     <div>
-    <img :src="products[i-1].image" class="room-img">
-    <h4>{{ products[i-1].title }}</h4>
-    <p>{{ products[i-1].price }}원</p>
+    <img :src="원룸.image" class="room-img">
+    <h4 @click="sendEmit">{{ 원룸.title }}</h4>
+    <p>{{ 원룸.price }}원</p>
     <!-- <button>허위매물신고</button> <span>신고수: {{ 신고수[i-1] }}</span> -->
   </div> 
 </template>
@@ -11,10 +11,12 @@
 export default {
     name: 'CardVue',
     props: {
-        products: Array,
-        누른거: Number,
-        isModalOpen: Boolean,
-        신고수: Number,
+        원룸 : Object,
+    },
+    methods:{
+        sendEmit(){
+            this.$emit('openModal', this.원룸.id)
+        }
     }
 }
 </script>
