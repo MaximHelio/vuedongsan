@@ -1,15 +1,20 @@
 <template>
+  <Modal :products="products" :누른거="누른거" :isModalOpen="isModalOpen"/>
+  
   <div class="menu">
     <!-- :key의 용도 : 반복문 쓸 때 꼭 써야함
                     반복문 돌린 요소를 컴퓨터가 구분하기 위해 씀 -->
     <a v-for="(any, i) in menus" :key="i">{{ any }}</a>
   </div>
-  <div v-for="i in 3" :key="i">
-    <img :src="`@/assets/${roomImg[i-1]}`">
-    <h4>{{ products[i-1] }}</h4>
-    <p>{{ price[i-1] }} 만원</p>
-    <button @click="신고수[i-1]+=1">허위매물신고</button> <span>신고수: {{ 신고수[i-1] }}</span>
-  </div> 
+  
+  <Discount/>
+  <Card :products="products[0]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+  <Card :products="products[1]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+  <Card :products="products[2]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+  <Card :products="products[3]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+  <Card :products="products[4]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+  <Card :products="products[5]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+  
   <!-- <div>
     <h4>{{ products[1] }}</h4>
     <1. 쇼핑몰 가격은 변동되는 경우가 많기 때문
@@ -24,16 +29,21 @@
   </template>
 
 <script>
+import products from './data/oneroom.js';
+import Discount from './components/Discount.vue';
+import Modal from './components/Modal.vue';
+import Card from './components/Card.vue';
 
 export default {
   name: 'App',
   data(){
     return {
+      누른거: 0,
       roomImg:['room0.jpg', 'room1.jpg', 'room2.jpg'] ,
       신고수: [0, 0, 0],
       menus:['Home', 'Shop', 'About'],
-      price: [50, 60, 70],
-      products: ['역삼동 원룸', '천호동 원룸', '마포구 원룸']
+      products: products,
+      isModalOpen: false,
     }
   },
   methods : {
@@ -44,11 +54,34 @@ export default {
     }
   },
   components: {
+    Discount: Discount,
+    Modal: Modal,
+    Card: Card,
   }
 }
 </script>
 
 <style>
+body{
+  margin: 0;
+}
+div{
+  box-sizing: border-box;
+}
+.black-bg{
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  position: fixed; padding: 20px;
+}
+.white-bg{
+  width: 100%; background: white;
+  border-radius: 8px;
+  padding: 20px;
+}
+.room-img{
+  width: 100%;
+  margin-top: 40px;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
