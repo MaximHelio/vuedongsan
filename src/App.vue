@@ -1,5 +1,5 @@
 <template>
-  <Modal :products="products" :누른거="누른거" :isModalOpen="isModalOpen"/>
+  <Modal @closeModal="isModalOpen=false" :products="products" :누른거="누른거" :isModalOpen="isModalOpen"/>
   <div class="menu">
     <!-- :key의 용도 : 반복문 쓸 때 꼭 써야함
                     반복문 돌린 요소를 컴퓨터가 구분하기 위해 씀 -->
