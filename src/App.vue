@@ -1,33 +1,38 @@
 <template>
-  <Modal @closeModal="isModalOpen=false" :products="products" :누른거="누른거" :isModalOpen="isModalOpen"/>
-  <div class="menu">
-    <!-- :key의 용도 : 반복문 쓸 때 꼭 써야함
-                    반복문 돌린 요소를 컴퓨터가 구분하기 위해 씀 -->
-    <a v-for="(any, i) in menus" :key="i">{{ any }}</a>
+<!--한번에 렌더링할 때 div로 감싸기-->
+  <div v-if="consumes">
+    <Modal @closeModal="isModalOpen=false" :products="products" :누른거="누른거" :isModalOpen="isModalOpen"/>
+    <div class="menu">
+      <!-- :key의 용도 : 반복문 쓸 때 꼭 써야함
+                      반복문 돌린 요소를 컴퓨터가 구분하기 위해 씀 -->
+      <a v-for="(any, i) in menus" :key="i">{{ any }}</a>
+    </div>
+    <Discount/>
+    <div v-for="(consume, i) in consumes" :key="i">{{ consume.price }}</div>
+    <Card @openModal="isModalOpen=true; 누른거=$event"
+      :원룸="products[i-1]" v-for="i in products.length" :key="i"    
+      :isModalOpen="isModalOpen"
+    />
+    <!--html안에선 this 생략-->
+    <!-- <Card :원룸="products[1]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+    <Card :원룸="products[2]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+    <Card :원룸="products[3]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+    <Card :원룸="products[4]" :누른거="누른거" :isModalOpen="isModalOpen"/>
+    <Card :원룸="products[5]" :누른거="누른거" :isModalOpen="isModalOpen"/> -->
+    
+    <!-- <div>
+      <h4>{{ products[1] }}</h4>
+      <1. 쇼핑몰 가격은 변동되는 경우가 많기 때문
+          2. 실시간 자동 렌더링 기능 이용하려고 하기 때문
+          3. 자주 변경되거나 중요한 데이터는 데이터 바인딩으로 박아 넣음
+      <p>{{ price[1] }} 만원</p>
+    </div> 
+    <div>
+      <h4>{{ products[2] }}</h4>
+      <p>{{ price[2] }} 만원</p>
+    </div> -->
   </div>
-  <Discount/>
-  <Card @openModal="isModalOpen=true; 누른거=$event"
-    :원룸="products[i-1]" v-for="i in products.length" :key="i"    
-    :isModalOpen="isModalOpen"
-  />
-  <!-- <Card :원룸="products[1]" :누른거="누른거" :isModalOpen="isModalOpen"/>
-  <Card :원룸="products[2]" :누른거="누른거" :isModalOpen="isModalOpen"/>
-  <Card :원룸="products[3]" :누른거="누른거" :isModalOpen="isModalOpen"/>
-  <Card :원룸="products[4]" :누른거="누른거" :isModalOpen="isModalOpen"/>
-  <Card :원룸="products[5]" :누른거="누른거" :isModalOpen="isModalOpen"/> -->
-  
-  <!-- <div>
-    <h4>{{ products[1] }}</h4>
-    <1. 쇼핑몰 가격은 변동되는 경우가 많기 때문
-         2. 실시간 자동 렌더링 기능 이용하려고 하기 때문
-         3. 자주 변경되거나 중요한 데이터는 데이터 바인딩으로 박아 넣음
-    <p>{{ price[1] }} 만원</p>
-  </div> 
-  <div>
-    <h4>{{ products[2] }}</h4>
-    <p>{{ price[2] }} 만원</p>
-  </div> -->
-  </template>
+</template>
 
 <script>
 import products from './data/oneroom.js';
@@ -47,6 +52,12 @@ export default {
       isModalOpen: false,
     }
   },
+  computed: {
+    consumes() {
+      console.log('abc')
+      return this.$store.state.$consumes.consumes
+    }
+  },
   methods : {
     increase(){
       this.index.forEach(i => {
@@ -58,6 +69,13 @@ export default {
     Discount: Discount,
     Modal: Modal,
     Card: Card,
+  },
+  created() { //html 그리기 전 통신
+    this.$store.dispatch('consumersRead')
+    console.log(this.consumes)
+    console.log(this.consumes) //123
+    console.log(this.consumes) //123
+    console.log(this.consumes)
   }
 }
 </script>
