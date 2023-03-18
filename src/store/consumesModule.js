@@ -10,15 +10,15 @@ export const consumesModule = {
     }
   },
   actions: {
-    consumersRead(thisStore) { // consumeModule 전체
-      axios.get('http://localhost:8081/api/v1/consumes').then((response) => {
-        console.log(this);
-        console.log(response.data.consumes);
-        // thisStore.state.consumes = response.data.consumes;
+    async consumersRead(thisStore, query) { // consumeModule 전체
+      try {
+        const response = await axios.get(`http://localhost:8081/api/v1/consumes?query=${query}`)
+        console.log(this)
+        console.log(response.data.consumes)
         thisStore.commit('consumersRead', response.data.consumes)
-      }).catch(function(error) {
+      } catch (error) {
         thisStore.dispatch('axiosError', error)
-      })
+      }
     }
   }
 }
