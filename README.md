@@ -31,3 +31,6 @@ HAVING COUNT(1) > 1;
 
 ## 마이너스 대출 약정 신규탐지/MDP_DB_MDP_MSOPPSN007 상시 배치) 호출 쓰기 
 ##
+telnet t-pfm-api.samsungcard.biz 80
+ping t-pfm-api.samsungcard.biz
+ping은 되는데 telnet은 안됨 => 방화벽 안열림
